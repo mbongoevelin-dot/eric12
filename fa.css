@@ -527,8 +527,39 @@
 
             font-size: 13px;
         }
-
-
+          .footer{
+            background: #090910;
+            color: white;
+            padding: 35px 20px;
+            margin-top: 40px;
+          }
+          .foot{
+            display: flex;
+            justify-content: space-around;
+            gap: 30px;
+          }
+          .footer h2{
+            color: #ff3155;
+          }
+          .footer h3{
+            margin-top: 10px;
+          }
+          .footer a{
+            display: block;
+            color: #aaa;
+            text-decoration: none;
+            margin: 7px;
+          }
+          .footer p{
+            color: #aaa;
+          }
+          .copy{
+            text-align: center;
+            border-top: 1px solid #333;
+            padding-top: 15px;
+            margin: 25px;
+          }
+    
         /* =========================
            IMAGE OVERLAY
         ========================= */
