@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GoalZone - Football News</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { sans: ['Inter', 'Arial', 'sans-serif'] }
+        }
+      }
+    }
+  </script>
+  <style>
+    html { scroll-behavior:smooth; }
+    body { background:#151515; color:#fff; }
+    .line-clamp-2 { display:-webkit-box; -webkit-line-clamp:2; line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
+    .line-clamp-3 { display:-webkit-box; -webkit-line-clamp:3; line-clamp:3; -webkit-box-orient:vertical; overflow:hidden; }
+  </style>
+</head>
+
+<body class="font-sans">
+
+
+<!-- NAVBAR -->
+<header class="sticky top-0 z-50 bg-black border-b border-white/10">
+  <nav class="max-w-[1500px] mx-auto px-4 h-16 flex items-center gap-5">
+    <a href="#home" class="shrink-0 flex items-center gap-1">
+      <span class="border-2 border-white px-3 py-1 text-2xl font-black tracking-tight">GOAL<span class="text-gray-400">¹</span></span>
+    </a>
+
+    <div id="desktopNav" class="hidden lg:flex items-center gap-6 text-[15px] font-black uppercase whitespace-nowrap">
+      <a href="#scores" class="nav-link hover:text-gray-300">Scores</a>
+      <button onclick="toggleDropdown('latestMenu')" class="nav-link flex items-center gap-1 hover:text-gray-300">Latest <span>⌄</span></button>
+      <a href="#forums" class="nav-link hover:text-gray-300">Forums</a>
+      <button onclick="toggleDropdown('competitionMenu')" class="nav-link flex items-center gap-1 hover:text-gray-300">Competitions <span>⌄</span></button>
+      <a href="#newsletters" class="nav-link hover:text-gray-300">Newsletters</a>
+      <a href="#indivisa" class="nav-link hover:text-gray-300">Indivisa</a>
+      <a href="#goalstudio" class="nav-link hover:text-gray-300">Goalstudio</a>
+      <a href="#shop" class="nav-link hover:text-gray-300">Shop</a>
+    </div>
+    
+    <div class="ml-auto flex items-center gap-2">
+      <input id="searchInput" class="hidden sm:block w-44 md:w-64 bg-[#252525] border border-white/10 rounded-full px-4 py-2 text-sm outline-none focus:border-red-500" placeholder="Search news...">
+      <button onclick="toggleSearch()" class="sm:hidden bg-[#252525] p-2 rounded-full">🔎</button>
+      <button onclick="openLogin()" class="px-4 py-2 rounded-full bg-red-600 hover:bg-red-500 font-bold text-sm">Login</button>
+    </div>
+  </nav>
+  <input id="mobileSearch" class="hidden sm:hidden w-[calc(100%-2rem)] mx-4 mb-3 bg-[#252525] border border-white/10 rounded-xl px-4 py-3 outline-none" placeholder="Search news...">
+</header>
+
+<main id="home" class="max-w-7xl mx-auto px-4 py-8">
+
+    <main id="home" class="max-w-7xl mx-auto px-4 py-8">
+
+        <!-- FOOTBALL SCORES -->
+<section id="scores" class="bg-[#181818] text-white p-5 rounded-xl">
+
+    <!-- Competition Selector -->
+    <div class="flex flex-col xl:flex-row gap-3">
+
+        <select id="competitionSelect"
+                onchange="filterScores()"
+                class="w-full xl:w-72 bg-[#333] text-white
+                       px-5 py-4 rounded-lg font-bold
+                       border border-gray-700 outline-none
+                       focus:ring-2 focus:ring-red-500">
+
+            <option value="all">All competitions</option>
+            <option value="premier">Premier League 🇬🇧</option>
+            <option value="laliga">LaLiga 🇪🇸</option>
+            <option value="bundesliga">Bundesliga 🇩🇪</option>
+            <option value="seriea">Serie A 🇮🇹</option>
+            <option value="ligue1">Ligue 1 🇫🇷</option>
+            <option value="ucl">Champions League 🇪🇺</option>
+            <option value="uel">Europa League 🇪🇺</option>
+
+        </select>
+
+    </div>
+
+
+    <!-- Date Navigation -->
+    <div class="flex gap-1 mt-3 overflow-x-auto">
+
+        <button class="min-w-[140px] bg-[#333] hover:bg-[#444]
+                       px-5 py-4 rounded font-semibold">
+            Sun 23 Aug
+        </button>
+
+        <button class="min-w-[140px] bg-[#333] hover:bg-[#444]
+                       px-5 py-4 rounded font-semibold">
+            Mon 24 Aug
+        </button>
+
+        <button class="min-w-[140px] bg-[#333] hover:bg-[#444]
+                       px-5 py-4 rounded font-semibold">
+            Yesterday
+        </button>
+
+        <button class="min-w-[140px] bg-black
+                       px-5 py-4 rounded font-bold">
+            Today
+        </button>
+
+        <button class="min-w-[140px] bg-[#333] hover:bg-[#444]
+                       px-5 py-4 rounded font-semibold">
+            Tomorrow
+        </button>
+
+        <button class="min-w-[140px] bg-[#333] hover:bg-[#444]
+                       px-5 py-4 rounded font-semibold">
+            Fri 28 Aug
+        </button>
+
+    </div>
+
+
+    <!-- Clubs / Matches -->
+    <div id="scoreCards"
+         class="grid grid-cols-1 sm:grid-cols-2
+                lg:grid-cols-3 xl:grid-cols-5
+                gap-2 mt-2">
+    </div>
+
+</section>
+
+
+    <div class="flex-1 overflow-x-auto">
+      <div id="dateTabs" class="flex min-w-max gap-1"></div>
+    </div>
+  </div>
+
+</section>
+
+
+    <!-- Dropdowns -->
+  <div id="latestMenu" class="hidden absolute top-16 left-[170px] bg-[#222] border border-white/10 rounded-b-lg shadow-xl p-3 w-52">
+    <a href="#news" class="block px-3 py-2 rounded hover:bg-[#333]">Latest News</a>
+    <a href="#news" class="block px-3 py-2 rounded hover:bg-[#333]">Transfer News</a>
+    <a href="#news" class="block px-3 py-2 rounded hover:bg-[#333]">Opinion</a>
+  </div>
+
+  <div id="competitionMenu" class="hidden absolute top-16 left-[480px] bg-[#222] border border-white/10 rounded-b-lg shadow-xl p-3 w-56">
+    <a href="#scores" class="block px-3 py-2 rounded hover:bg-[#333]">Premier League</a>
+    <a href="#scores" class="block px-3 py-2 rounded hover:bg-[#333]">LaLiga</a>
+    <a href="#scores" class="block px-3 py-2 rounded hover:bg-[#333]">Champions League</a>
+  </div>
+   
+   <!-- Mobile menu -->
+  <div id="mobileMenu" class="hidden lg:hidden bg-[#111] border-t border-white/10 px-5 py-4 space-y-1">
+    <a href="#scores" onclick="closeMobileMenu()" class="block py-3 font-bold uppercase">Scores</a>
+    <a href="#news" onclick="closeMobileMenu()" class="block py-3 font-bold uppercase">Latest</a>
+    <a href="#forums" onclick="closeMobileMenu()" class="block py-3 font-bold uppercase">Forums</a>
+    <a href="#scores" onclick="closeMobileMenu()" class="block py-3 font-bold uppercase">Competitions</a>
+    <a href="#newsletters" onclick="closeMobileMenu()" class="block py-3 font-bold uppercase">Newsletters</a>
+    <a href="#indivisa" onclick="closeMobileMenu()" class="block py-3 font-bold uppercase">Indivisa</a>
+    <a href="#goalstudio" onclick="closeMobileMenu()" class="block py-3 font-bold uppercase">Goalstudio</a>
+    <a href="#shop" onclick="closeMobileMenu()" class="block py-3 font-bold uppercase">Shop</a>
+  </div>
+</header>
+
+  
+
+<!-- HERO / NEWS GRID -->
+<section id="news" class="grid lg:grid-cols-12 gap-4">
+
+  <article onclick="showArticle('How Romario became a global phenomenon')" class="lg:col-span-6 bg-[#303030] rounded-lg overflow-hidden cursor-pointer group">
+    <img src="https://images.unsplash.com/photo-1579952363873-27f3bade9f55?auto=format&fit=crop&w=1200&q=80" class="w-full h-72 object-cover group-hover:scale-105 transition duration-500">
+    <div class="p-5">
+      <p class="text-xs text-gray-400 mb-4">ANALYSIS · BRAZIL</p>
+      <h1 class="text-2xl md:text-3xl font-bold mb-4">How Romario became a global phenomenon</h1>
+      <p class="text-gray-300">The diminutive Brazilian wasn't easy to handle on or off the field, but he still managed to conquer the world.</p>
+      <div class="mt-6 flex justify-between items-center text-xs text-gray-400">
+        <span>◷ 14h &nbsp; 💬 3</span><span class="text-white font-bold">Full story →</span>
+      </div>
+    </div>
+  </article>
+
+  <div class="lg:col-span-3 space-y-4">
+    <article onclick="showArticle('Women football news')" class="bg-[#303030] rounded-lg overflow-hidden cursor-pointer">
+      <img src="https://images.unsplash.com/photo-1553778263-73a83bab9b0c?auto=format&fit=crop&w=700&q=80" class="w-full h-40 object-cover">
+      <div class="p-4"><p class="text-xs text-gray-400">WOMEN'S FOOTBALL</p><h2 class="font-bold mt-3">UEFA boycott falls flat ahead of Women's U20 World Cup</h2><p class="text-xs text-gray-400 mt-4">◷ 11h &nbsp; 💬 1</p></div>
+    </article>
+    <article onclick="showArticle('Elite players ready for pressure')" class="bg-[#303030] rounded-lg overflow-hidden cursor-pointer">
+      <img src="https://images.unsplash.com/photo-1518609878373-06d740f60d8b?auto=format&fit=crop&w=700&q=80" class="w-full h-40 object-cover">
+      <div class="p-4"><p class="text-xs text-gray-400">OPINION</p><h2 class="font-bold mt-3">Elite players have already proved they can handle pressure</h2><p class="text-xs text-gray-400 mt-4">◷ 12h &nbsp; 💬 6</p></div>
+    </article>
+  </div>
+
+  <aside class="lg:col-span-3 bg-[#191919] rounded-lg p-5 flex items-center justify-center min-h-[300px] text-gray-500">
+    <div class="text-center"><span class="text-xs">ADVERTISEMENT</span><div class="mt-4 border border-dashed border-white/10 p-10">300 × 250</div></div>
+  </aside>
+</section>
+
+<!-- BREAKING + CARDS -->
+<section class="grid lg:grid-cols-12 gap-4 mt-4">
+  <aside class="lg:col-span-3 bg-[#2b2b2b] rounded-lg p-5">
+    <h2 class="text-xl font-black mb-3">BREAKING NEWS</h2>
+    <div id="breakingList"></div>
+    <button onclick="showAllNews()" class="w-full mt-3 text-sm font-bold">BREAKING NEWS →</button>
+  </aside>
+
+  <div id="newsGrid" class="lg:col-span-9 grid md:grid-cols-3 gap-4"></div>
+</section>
+
+<!-- AD -->
+<section class="my-10 h-40 md:h-52 bg-[#111] flex items-center justify-center text-gray-500 text-xs">ADVERTISEMENT</section>
+
+<!-- TEAM SUMMARIES -->
+<section id="teams">
+  <div class="flex items-center justify-between mb-4">
+    <h2 class="text-3xl font-black">TEAM SUMMARIES <span class="text-xs font-normal text-gray-400">Generated by GoalZone</span></h2>
+    <div class="flex gap-2">
+      <button onclick="moveTeams(-1)" class="bg-[#333] rounded-full w-9 h-9">‹</button>
+      <button onclick="moveTeams(1)" class="bg-[#333] rounded-full w-9 h-9">›</button>
+    </div>
+  </div>
+  <div id="teamSlider" class="flex gap-3 overflow-hidden"></div>
+</section>
+
+<!-- MY FEED -->
+<section id="feed" class="mt-12">
+  <h2 class="text-3xl font-black mb-4">MY FEED</h2>
+  <button onclick="addTeam()" class="mb-5 px-4 py-2 rounded-full bg-[#292929] border border-white/10 text-sm">＋ Add Favourite Team</button>
+  <div class="bg-[#222] rounded-lg p-4">
+    <h3 class="font-bold mb-4">Popular Teams</h3>
+    <div id="favoriteTeams" class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-2"></div>
+  </div>
+</section>
+
+</main>
+
+<footer class="border-t border-white/10 mt-16 py-10 bg-[#101010]">
+  <div class="max-w-7xl mx-auto px-4 grid md:grid-cols-3 gap-6">
+    <div><div class="text-2xl font-black">GOAL<span class="text-red-500">ZONE</span></div><p class="text-gray-500 text-sm mt-2">Football news, teams, opinions and match stories.</p></div>
+    <div><h3 class="font-bold mb-3">Quick Links</h3><div class="space-y-2 text-sm text-gray-400"><a href="#home" class="block hover:text-white">Home</a><a href="#news" class="block hover:text-white">News</a><a href="#teams" class="block hover:text-white">Teams</a><a href="#feed" class="block hover:text-white">My Feed</a></div></div>
+    <div><h3 class="font-bold mb-3">Follow Us</h3><div class="flex gap-2"><a href="https://facebook.com" target="_blank" class="bg-[#222] px-3 py-2 rounded">Facebook</a><a href="https://x.com" target="_blank" class="bg-[#222] px-3 py-2 rounded">X</a><a href="https://instagram.com" target="_blank" class="bg-[#222] px-3 py-2 rounded">Instagram</a></div></div>
+  </div>
+</footer>
+
+<!-- ARTICLE MODAL -->
+<div id="articleModal" class="hidden fixed inset-0 z-[60] bg-black/80 p-4 flex items-center justify-center">
+  <div class="bg-[#252525] max-w-xl w-full rounded-2xl p-6">
+    <div class="flex justify-between"><h2 id="modalTitle" class="text-2xl font-black"></h2><button onclick="closeModal()" class="text-2xl">×</button></div>
+    <p class="text-gray-400 mt-4">This is a functional article preview. Replace this section with PHP/MySQL data when connecting your real news database.</p>
+    <button onclick="closeModal()" class="mt-6 bg-red-600 px-5 py-2 rounded-full font-bold">Close</button>
+  </div>
+</div>
+
+<!-- LOGIN MODAL -->
+<div id="loginModal" class="hidden fixed inset-0 z-[60] bg-black/80 p-4 flex items-center justify-center">
+  <form onsubmit="login(event)" class="bg-[#252525] max-w-sm w-full rounded-2xl p-6">
+    <h2 class="text-2xl font-black">Login</h2>
+    <input id="email" required type="email" placeholder="Email" class="w-full mt-5 p-3 bg-[#181818] rounded-lg outline-none">
+    <input id="password" required type="password" placeholder="Password" class="w-full mt-3 p-3 bg-[#181818] rounded-lg outline-none">
+    <button class="w-full mt-4 bg-red-600 py-3 rounded-lg font-bold">Login</button>
+    <button type="button" onclick="closeLogin()" class="w-full mt-2 text-gray-400">Cancel</button>
+  </form>
+</div>
+
+<script>
+const news = [
+  ["Brilliant Bouaddi won't fix all of Man City's many issues","OPINION","https://images.unsplash.com/photo-1579952363873-27f3bade9f55?auto=format&fit=crop&w=700&q=80"],
+  ["How Juventus is making impactful strides in well-being, mental health & more","JUVENTUS","https://images.unsplash.com/photo-1522778119026-d647f0596c20?auto=format&fit=crop&w=700&q=80"],
+  ["How Arsenal's shock win sparked their Champions League run","FEATURES","https://images.unsplash.com/photo-1508098682722-e99c43a406b2?auto=format&fit=crop&w=700&q=80"],
+  ["Why Chelsea can't win the title despite EPL's best forward line","OPINION","https://images.unsplash.com/photo-1579952363873-27f3bade9f55?auto=format&fit=crop&w=700&q=80"],
+  ["Why English players are flocking to Italy once more","ANALYSIS","https://images.unsplash.com/photo-1526232761682-d26e03ac148e?auto=format&fit=crop&w=700&q=80"],
+  ["Are Barcelona's financial problems finally over?!","ANALYSIS","https://images.unsplash.com/photo-1522778119026-d647f0596c20?auto=format&fit=crop&w=700&q=80"]
+];
+
+const breaking = [
+ "Galatasaray, new offer to AC Milan for Leao: €45 million plus bonuses",
+ "Alonso issues Fernandez update amid Man City interest",
+ "Tony Vilhena definitely returns to the Eredivisie",
+ "Laporta confirms Barca interest in Alvarez",
+ "When does the dormant volcano erupt? A warning to Real Madrid",
+ "Putting him under pressure: Flick announces a new decision regarding Balde",
+ "Jack Grealish could swap"
+];
+
+const matches = [
+
+    // PREMIER LEAGUE
+    {
+        league: "premier",
+        competition: "Premier League",
+        time: "15:00",
+        home: "Arsenal",
+        away: "Chelsea"
+    },
+
+    {
+        league: "premier",
+        competition: "Premier League",
+        time: "17:30",
+        home: "Liverpool",
+        away: "Manchester United"
+    },
+
+    {
+        league: "premier",
+        competition: "Premier League",
+        time: "20:00",
+        home: "Manchester City",
+        away: "Tottenham"
+    },
+
+
+    // LALIGA
+    {
+        league: "laliga",
+        competition: "LaLiga",
+        time: "18:30",
+        home: "Barcelona",
+        away: "Atletico Madrid"
+    },
+
+    {
+        league: "laliga",
+        competition: "LaLiga",
+        time: "20:00",
+        home: "Real Madrid",
+        away: "Real Sociedad"
+    },
+
+    {
+        league: "laliga",
+        competition: "LaLiga",
+        time: "21:00",
+        home: "Sevilla",
+        away: "Valencia"
+    },
+
+
+    // BUNDESLIGA
+    {
+        league: "bundesliga",
+        competition: "Bundesliga",
+        time: "15:30",
+        home: "Bayern Munich",
+        away: "Borussia Dortmund"
+    },
+
+    {
+        league: "bundesliga",
+        competition: "Bundesliga",
+        time: "17:30",
+        home: "RB Leipzig",
+        away: "Bayer Leverkusen"
+    },
+
+
+    // SERIE A
+    {
+        league: "seriea",
+        competition: "Serie A",
+        time: "18:00",
+        home: "Inter Milan",
+        away: "AC Milan"
+    },
+
+    {
+        league: "seriea",
+        competition: "Serie A",
+        time: "20:45",
+        home: "Juventus",
+        away: "Napoli"
+    },
+
+
+    // LIGUE 1
+    {
+        league: "ligue1",
+        competition: "Ligue 1",
+        time: "20:00",
+        home: "PSG",
+        away: "Marseille"
+    },
+
+
+    // CHAMPIONS LEAGUE
+    {
+        league: "ucl",
+        competition: "Champions League",
+        time: "20:00",
+        home: "Real Madrid",
+        away: "Manchester City"
+    },
+
+    {
+        league: "ucl",
+        competition: "Champions League",
+        time: "20:00",
+        home: "Barcelona",
+        away: "Bayern Munich"
+    },
+
+
+    // EUROPA LEAGUE
+    {
+        league: "uel",
+        competition: "Europa League",
+        time: "20:00",
+        home: "Roma",
+        away: "Manchester United"
+    }
+
+];
+
+
+function filterScores() {
+
+    let selected =
+        document.getElementById("competitionSelect").value;
+
+    let filtered = matches.filter(match => {
+
+        if (selected === "all") {
+            return true;
+        }
+
+        return match.league === selected;
+
+    });
+
+    displayMatches(filtered);
+}
+
+
+function displayMatches(data) {
+
+    let container =
+        document.getElementById("scoreCards");
+
+    container.innerHTML = "";
+
+    data.forEach(match => {
+
+        container.innerHTML += `
+
+        <div class="bg-[#333] hover:bg-[#3b3b3b]
+                    transition rounded-lg p-4
+                    min-h-[145px] cursor-pointer">
+
+            <div class="flex justify-between
+                        text-sm text-gray-200">
+
+                <span>${match.competition}</span>
+
+                <span class="font-bold">
+                    ${match.time}
+                </span>
+
+            </div>
+
+            <p class="text-xs text-gray-400 mt-1">
+                Football
+            </p>
+
+
+            <div class="flex justify-between
+                        items-center mt-5">
+
+                <span class="font-bold">
+                    ⚽ ${match.home}
+                </span>
+
+                <span class="font-bold">
+                    -
+                </span>
+
+            </div>
+
+
+            <div class="flex justify-between
+                        items-center mt-3">
+
+                <span class="font-bold">
+                    ⚽ ${match.away}
+                </span>
+
+                <span class="font-bold">
+                    -
+                </span>
+
+            </div>
+
+        </div>
+
+        `;
+
+    });
+
+}
+
+
+// Show all matches when page loads
+filterScores();
+
+const teams = [
+ ["Arsenal","🔴","Arsenal's latest squad news, transfers and match updates."],
+ ["Manchester City","🔵","City continue preparing for another competitive season."],
+ ["Manchester United","🔴","United's latest signings and transfer developments."],
+ ["Liverpool","🔴","Liverpool look ready for another exciting campaign."],
+ ["Chelsea","🔵","Chelsea's young squad continues to develop."],
+ ["Barcelona","🔵🔴","Barcelona prepare for another major La Liga challenge."],
+ ["Real Madrid","⚪","Madrid remain focused on domestic and European success."],
+ ["Tottenham Hotspur","⚪","Spurs continue building a competitive squad."]
+];
+
+let teamOffset = 0;
+
+function renderNews(list = news) {
+  document.getElementById("newsGrid").innerHTML = list.map((n,i)=>`
+    <article onclick="showArticle('${n[0].replace(/'/g,"\\'")}')" class="bg-[#303030] rounded-lg overflow-hidden cursor-pointer hover:-translate-y-1 transition">
+      <img src="${n[2]}" class="w-full h-32 object-cover">
+      <div class="p-4">
+        <p class="text-[10px] text-gray-400">${n[1]}</p>
+        <h3 class="font-bold mt-3 line-clamp-2">${n[0]}</h3>
+        <p class="text-xs text-gray-500 mt-5">◷ ${10+i}h &nbsp; 💬 ${i+1}</p>
+      </div>
+    </article>`).join("");
+}
+function renderBreaking() {
+  document.getElementById("breakingList").innerHTML = breaking.map((x,i)=>`
+    <button onclick="showArticle('${x.replace(/'/g,"\\'")}')" class="text-left w-full py-3 border-b border-white/10 text-sm hover:text-red-400">
+      <span class="block text-[10px] text-gray-500">8 hours ago</span>${x}
+    </button>`).join("");
+}
+function renderTeams() {
+  const visible = [...teams.slice(teamOffset), ...teams.slice(0,teamOffset)].slice(0,5);
+  document.getElementById("teamSlider").innerHTML = visible.map((t,i)=>`
+    <article class="min-w-[220px] sm:min-w-[240px] h-64 rounded-xl p-4 flex flex-col justify-end bg-gradient-to-t from-black/90 to-[#244] border border-white/10">
+      <div class="text-4xl">${t[1]}</div><h3 class="font-bold mt-2">${t[0]}</h3>
+      <p class="text-xs text-gray-300 mt-2 line-clamp-3">${t[2]}</p>
+      <button onclick="follow('${t[0]}',this)" class="mt-3 bg-black/50 border border-white/20 rounded-full py-2 text-xs">Follow ☆</button>
+    </article>`).join("");
+}
+function renderFavorites() {
+  const saved = JSON.parse(localStorage.getItem("favoriteTeams") || "[]");
+  document.getElementById("favoriteTeams").innerHTML = teams.map(t=>`
+    <div class="border border-white/10 rounded-lg p-3 text-center">
+      <div class="text-xl">${t[1]}</div><p class="text-xs mt-1">${t[0]}</p>
+      <button onclick="follow('${t[0]}',this)" class="text-xs mt-3 text-gray-400">${saved.includes(t[0]) ? "Following ★" : "Follow ☆"}</button>
+    </div>`).join("");
+}
+function follow(name, btn) {
+  let saved = JSON.parse(localStorage.getItem("favoriteTeams") || "[]");
+  if(saved.includes(name)) saved = saved.filter(x=>x!==name); else saved.push(name);
+  localStorage.setItem("favoriteTeams",JSON.stringify(saved));
+  renderFavorites(); renderTeams();
+}
+function addTeam() {
+  document.getElementById("feed").scrollIntoView({behavior:"smooth"});
+  alert("Choose a team below and press Follow.");
+}
+function moveTeams(dir) {
+  teamOffset = (teamOffset + dir + teams.length) % teams.length;
+  renderTeams();
+}
+function showArticle(title) {
+  document.getElementById("modalTitle").textContent = title;
+  document.getElementById("articleModal").classList.remove("hidden");
+}
+function closeModal(){document.getElementById("articleModal").classList.add("hidden");}
+function openLogin(){document.getElementById("loginModal").classList.remove("hidden");}
+function closeLogin(){document.getElementById("loginModal").classList.add("hidden");}
+function login(e){e.preventDefault(); localStorage.setItem("loggedIn","true"); closeLogin(); alert("Login successful!");}
+function toggleSearch(){document.getElementById("mobileSearch").classList.toggle("hidden");}
+
+function filterNews(value){
+  const q=value.toLowerCase().trim();
+  renderNews(news.filter(n=>n[0].toLowerCase().includes(q) || n[1].toLowerCase().includes(q)));
+}
+document.getElementById("searchInput").addEventListener("input",e=>filterNews(e.target.value));
+document.getElementById("mobileSearch").addEventListener("input",e=>filterNews(e.target.value));
+
+function showAllNews(){renderNews(news); document.getElementById("news").scrollIntoView({behavior:"smooth"});}
+
+renderNews(); renderBreaking(); renderTeams(); renderFavorites();
+</script>
+</body>
+</html>
