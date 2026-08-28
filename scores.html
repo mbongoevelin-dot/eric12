@@ -1,0 +1,586 @@
+  
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <title>Scores | Queens of Football</title>
+  <!-- HEADER -->
+    <header class="border-b border-gray-800 bg-[#171717]">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8
+                    h-20 flex items-center justify-between">
+
+            <a href="index.html"
+               class="text-2xl sm:text-3xl md:text-4xl
+                      font-black tracking-tight">
+                QUEENS OF FOOTBALL
+                <span>👑</span>
+            </a>
+
+            <!-- Desktop Navigation -->
+            <nav class="hidden md:flex items-center gap-7
+                        text-sm font-semibold">
+
+                <a href="index.html"
+                   class="text-gray-300 hover:text-white">
+                    Home
+                </a>
+
+                <a href="scores.html"
+                   class="text-orange-400">
+                    Scores
+                </a>
+
+                <a href="fixtures.html"
+                   class="text-gray-300 hover:text-white">
+                    Fixtures
+                </a>
+
+                <a href="teams.html"
+                   class="text-gray-300 hover:text-white">
+                    Teams
+                </a>
+
+                <a href="news.html"
+                   class="text-gray-300 hover:text-white">
+                    News
+                </a>
+
+            </nav>
+
+            <!-- Mobile Menu -->
+            <button onclick="toggleMenu()"
+                    class="md:hidden text-2xl">
+                ☰
+            </button>
+
+        </div>
+
+        <!-- Mobile Navigation -->
+        <nav id="mobileMenu"
+             class="hidden md:hidden border-t border-gray-800
+                    px-5 py-5 space-y-4 bg-[#202020]">
+
+            <a href="index.html"
+               class="block text-gray-300">
+                Home
+            </a>
+
+            <a href="scores.html"
+               class="block text-orange-400 font-bold">
+                Scores
+            </a>
+
+            <a href="fixtures.html"
+               class="block text-gray-300">
+                Fixtures
+            </a>
+
+            <a href="teams.html"
+               class="block text-gray-300">
+                Teams
+            </a>
+
+            <a href="news.html"
+               class="block text-gray-300">
+                News
+            </a>
+
+        </nav>
+    </header>
+
+
+    <!-- MAIN -->
+    <main class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8
+                 py-8 sm:py-10">
+
+        <!-- PAGE TITLE -->
+        <div class="mb-8">
+
+            <p class="text-orange-500 font-bold uppercase
+                      text-sm tracking-wider">
+                Women's Football
+            </p>
+
+            <h1 class="text-3xl sm:text-4xl md:text-5xl
+                       font-black mt-2">
+                Scores
+            </h1>
+
+            <p class="text-gray-400 mt-2">
+                Latest women's football results and live scores.
+            </p>
+
+        </div>
+
+
+        <!-- DATE SELECTOR -->
+        <section class="mb-6">
+
+            <div class="flex overflow-x-auto scrollbar-hide
+                        gap-2 pb-2">
+
+                <button onclick="selectDate(this)"
+                        class="date-btn min-w-[90px]
+                               bg-orange-500 rounded-lg
+                               px-4 py-3 text-center">
+
+                    <p class="text-xs">TODAY</p>
+                    <p class="font-bold">26 AUG</p>
+
+                </button>
+
+                <button onclick="selectDate(this)"
+                        class="date-btn min-w-[90px]
+                               bg-[#303030] rounded-lg
+                               px-4 py-3 text-center">
+
+                    <p class="text-xs text-gray-400">YESTERDAY</p>
+                    <p class="font-bold">25 AUG</p>
+
+                </button>
+
+                <button onclick="selectDate(this)"
+                        class="date-btn min-w-[90px]
+                               bg-[#303030] rounded-lg
+                               px-4 py-3 text-center">
+
+                    <p class="text-xs text-gray-400">MON</p>
+                    <p class="font-bold">24 AUG</p>
+
+                </button>
+
+                <button onclick="selectDate(this)"
+                        class="date-btn min-w-[90px]
+                               bg-[#303030] rounded-lg
+                               px-4 py-3 text-center">
+
+                    <p class="text-xs text-gray-400">SUN</p>
+                    <p class="font-bold">23 AUG</p>
+
+                </button>
+
+                <button onclick="selectDate(this)"
+                        class="date-btn min-w-[90px]
+                               bg-[#303030] rounded-lg
+                               px-4 py-3 text-center">
+
+                    <p class="text-xs text-gray-400">SAT</p>
+                    <p class="font-bold">22 AUG</p>
+
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- FILTER -->
+        <section class="mb-8">
+
+            <select id="competition"
+                    onchange="filterMatches()"
+                    class="w-full sm:w-auto
+                           bg-[#303030]
+                           border border-gray-700
+                           rounded-lg
+                           px-4 py-3
+                           text-white
+                           outline-none
+                           focus:border-orange-500">
+
+                <option value="all">All Competitions</option>
+                <option value="champions">
+                    Women's Champions League
+                </option>
+                <option value="league">
+                    Women's League
+                </option>
+                <option value="international">
+                    International
+                </option>
+
+            </select>
+
+        </section>
+
+
+        <!-- SCORES -->
+        <section id="matches"
+                 class="space-y-5">
+
+
+            <!-- CHAMPIONS LEAGUE -->
+            <div class="match"
+                 data-competition="champions">
+
+                <div class="bg-[#303030] rounded-xl overflow-hidden">
+
+                    <!-- Competition Header -->
+                    <div class="px-4 sm:px-6 py-4
+                                border-b border-gray-700
+                                flex justify-between
+                                items-center">
+
+                        <div>
+                            <p class="font-bold">
+                                Women's Champions League
+                            </p>
+
+                            <p class="text-xs text-gray-400 mt-1">
+                                Qualifying Round
+                            </p>
+                        </div>
+
+                        <span class="text-xs
+                                     text-gray-400">
+                            FINISHED
+                        </span>
+
+                    </div>
+
+
+                    <!-- MATCH -->
+                    <div class="p-5 sm:p-6
+                                flex items-center
+                                justify-between gap-4">
+
+                        <!-- HOME -->
+                        <div class="flex-1 text-right">
+
+                            <p class="font-bold text-sm
+                                      sm:text-base">
+                                SKN St. Poelten
+                            </p>
+
+                            <p class="text-xs text-gray-500 mt-1">
+                                Austria
+                            </p>
+
+                        </div>
+
+
+                        <!-- SCORE -->
+                        <div class="text-center
+                                    min-w-[80px]">
+
+                            <p class="text-2xl sm:text-3xl
+                                      font-black">
+                                1 - 3
+                            </p>
+
+                            <span class="text-xs
+                                         text-gray-400">
+                                FT
+                            </span>
+
+                        </div>
+
+
+                        <!-- AWAY -->
+                        <div class="flex-1 text-left">
+
+                            <p class="font-bold text-sm
+                                      sm:text-base">
+                                Juventus
+                            </p>
+
+                            <p class="text-xs text-gray-500 mt-1">
+                                Italy
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                    <!-- Match Details -->
+                    <div class="px-5 sm:px-6 pb-5
+                                text-center">
+
+                        <button
+                            class="text-orange-400
+                                   hover:text-orange-300
+                                   text-sm font-bold">
+
+                            Match details →
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- WOMEN'S LEAGUE -->
+            <div class="match"
+                 data-competition="league">
+
+                <div class="bg-[#303030] rounded-xl overflow-hidden">
+
+                    <div class="px-4 sm:px-6 py-4
+                                border-b border-gray-700
+                                flex justify-between">
+
+                        <div>
+                            <p class="font-bold">
+                                Women's League
+                            </p>
+
+                            <p class="text-xs text-gray-400 mt-1">
+                                Regular Season
+                            </p>
+                        </div>
+
+                        <span class="text-xs text-gray-400">
+                            FINISHED
+                        </span>
+
+                    </div>
+
+
+                    <div class="p-5 sm:p-6
+                                flex items-center
+                                justify-between gap-4">
+
+                        <div class="flex-1 text-right">
+
+                            <p class="font-bold text-sm sm:text-base">
+                                Barcelona Women
+                            </p>
+
+                            <p class="text-xs text-gray-500">
+                                Spain
+                            </p>
+
+                        </div>
+
+
+                        <div class="text-center min-w-[80px]">
+
+                            <p class="text-2xl sm:text-3xl
+                                      font-black">
+                                4 - 0
+                            </p>
+
+                            <span class="text-xs text-gray-400">
+                                FT
+                            </span>
+
+                        </div>
+
+
+                        <div class="flex-1 text-left">
+
+                            <p class="font-bold text-sm sm:text-base">
+                                Sevilla Women
+                            </p>
+
+                            <p class="text-xs text-gray-500">
+                                Spain
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- INTERNATIONAL -->
+            <div class="match"
+                 data-competition="international">
+
+                <div class="bg-[#303030] rounded-xl overflow-hidden">
+
+                    <div class="px-4 sm:px-6 py-4
+                                border-b border-gray-700
+                                flex justify-between">
+
+                        <div>
+                            <p class="font-bold">
+                                International
+                            </p>
+
+                            <p class="text-xs text-gray-400 mt-1">
+                                Women's International Friendly
+                            </p>
+                        </div>
+
+                        <span class="text-xs text-green-400">
+                            LIVE
+                        </span>
+
+                    </div>
+
+
+                    <div class="p-5 sm:p-6
+                                flex items-center
+                                justify-between gap-4">
+
+                        <div class="flex-1 text-right">
+
+                            <p class="font-bold text-sm sm:text-base">
+                                Cameroon Women
+                            </p>
+
+                        </div>
+
+
+                        <div class="text-center min-w-[80px]">
+
+                            <p class="text-2xl sm:text-3xl
+                                      font-black">
+                                1 - 1
+                            </p>
+
+                            <span class="text-xs
+                                         text-green-400">
+                                67'
+                            </span>
+
+                        </div>
+
+
+                        <div class="flex-1 text-left">
+
+                            <p class="font-bold text-sm sm:text-base">
+                                Nigeria Women
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+        </section>
+
+
+        <!-- NO MATCHES -->
+        <div id="noMatches"
+             class="hidden bg-[#303030] rounded-xl
+                    p-10 text-center">
+
+            <div class="text-4xl mb-3">
+                ⚽
+            </div>
+
+            <h2 class="font-bold text-xl">
+                No matches found
+            </h2>
+
+            <p class="text-gray-400 mt-2">
+                Try selecting another competition.
+            </p>
+
+        </div>
+
+    </main>
+
+
+    <!-- FOOTER -->
+    <footer class="border-t border-gray-800
+                   bg-[#111111] mt-10">
+
+        <div class="max-w-7xl mx-auto
+                    px-4 sm:px-6 lg:px-8
+                    py-6 text-center">
+
+            <p class="text-gray-500 text-sm">
+                © 2026 Queens of Football.
+                All rights reserved.
+            </p>
+
+        </div>
+
+    </footer>
+
+
+<script>
+
+    // Mobile menu
+    function toggleMenu() {
+
+        const menu = document.getElementById("mobileMenu");
+
+        menu.classList.toggle("hidden");
+
+    }
+
+
+    // Date buttons
+    function selectDate(button) {
+
+        const buttons =
+            document.querySelectorAll(".date-btn");
+
+        buttons.forEach(function(btn) {
+
+            btn.classList.remove("bg-orange-500");
+
+            btn.classList.add("bg-[#303030]");
+
+        });
+
+        button.classList.remove("bg-[#303030]");
+
+        button.classList.add("bg-orange-500");
+
+    }
+
+
+    // Competition filter
+    function filterMatches() {
+
+        const selected =
+            document.getElementById("competition").value;
+
+        const matches =
+            document.querySelectorAll(".match");
+
+        let visible = 0;
+
+        matches.forEach(function(match) {
+
+            const competition =
+                match.getAttribute("data-competition");
+
+            if (selected === "all" ||
+                competition === selected) {
+
+                match.classList.remove("hidden");
+
+                visible++;
+
+            } else {
+
+                match.classList.add("hidden");
+
+            }
+
+        });
+
+
+        const noMatches =
+            document.getElementById("noMatches");
+
+        if (visible === 0) {
+
+            noMatches.classList.remove("hidden");
+
+        } else {
+
+            noMatches.classList.add("hidden");
+
+        }
+
+    }
+
+</script>

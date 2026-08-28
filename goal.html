@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Goal - Football News</title>
+<script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-[#171717] text-white min-h-screen">
+
+<!-- NAVIGATION -->
+<header class="sticky top-0 z-50 bg-black border-b border-white/10">
+  <div class="max-w-[1400px] mx-auto px-4 py-3 flex items-center justify-between">
+    <a href="goal.php" class="text-3xl font-black tracking-tight">GOAL<span class="text-gray-500">•</span></a>
+    <nav id="desktopNav" class="hidden lg:flex items-center gap-7 text-sm font-bold">
+      <a href="#scores" class="hover:text-yellow-400">SCORES</a>
+      <a href="#latest" class="hover:text-yellow-400">LATEST</a>
+      <a href="#news" class="hover:text-yellow-400">NEWS</a>
+      <a href="#competitions" class="hover:text-yellow-400">COMPETITIONS</a>
+      <a href="#teams" class="hover:text-yellow-400">TEAMS</a>
+      <a href="#videos" class="hover:text-yellow-400">VIDEOS</a>
+    </nav>
+    <div class="flex items-center gap-2">
+      <button onclick="toggleSearch()" class="p-2 rounded-full hover:bg-white/10" aria-label="Search">⌕</button>
+      <button onclick="toggleMenu()" class="lg:hidden p-2 text-2xl" aria-label="Menu">☰</button>
+      <a href="#login" class="hidden sm:block border border-white/20 px-4 py-2 rounded-lg hover:bg-white/10">Log in</a>
+    </div>
+  </div>
+  <div id="mobileMenu" class="hidden lg:hidden px-4 pb-4 space-y-2 bg-black">
+    <a href="#scores" onclick="closeMenu()" class="block p-3 rounded hover:bg-white/10">Scores</a>
+    <a href="#latest" onclick="closeMenu()" class="block p-3 rounded hover:bg-white/10">Latest</a>
+    <a href="#news" onclick="closeMenu()" class="block p-3 rounded hover:bg-white/10">News</a>
+    <a href="#competitions" onclick="closeMenu()" class="block p-3 rounded hover:bg-white/10">Competitions</a>
+    <a href="#teams" onclick="closeMenu()" class="block p-3 rounded hover:bg-white/10">Teams</a>
+    <a href="#videos" onclick="closeMenu()" class="block p-3 rounded hover:bg-white/10">Videos</a>
+  </div>
+  <div id="searchBox" class="hidden border-t border-white/10 bg-[#222] p-3">
+    <div class="max-w-3xl mx-auto flex gap-2">
+      <input id="searchInput" oninput="searchNews()" placeholder="Search football news..." class="flex-1 bg-[#333] rounded-lg px-4 py-3 outline-none focus:ring-2 focus:ring-yellow-400">
+      <button onclick="toggleSearch()" class="px-4 rounded-lg bg-yellow-400 text-black font-bold">Close</button>
+    </div>
+  </div>
+</header>
+
+<!-- AD -->
+<div class="h-40 sm:h-56 lg:h-72 flex items-start justify-center pt-5 text-gray-400 text-sm bg-[#141414]">Advertisement</div>
+
+<main class="max-w-[1400px] mx-auto px-4 py-7">
+
+<!-- SCORE BAR -->
+<section id="scores" class="mb-8">
+  <div class="flex flex-col xl:flex-row gap-3 mb-3">
+    <select id="competitionSelect" onchange="loadScores()" class="bg-[#333] rounded-lg px-5 py-4 font-bold outline-none w-full xl:w-72">
+      <option value="all">All competitions</option>
+      <option value="premier">Premier League</option>
+      <option value="laliga">LaLiga</option>
+      <option value="bundesliga">Bundesliga</option>
+      <option value="seriea">Serie A</option>
+      <option value="ligue1">Ligue 1</option>
+      <option value="ucl">Champions League</option>
+      <option value="uel">Europa League</option>
+    </select>
+    <div class="flex overflow-x-auto gap-1">
+      <button class="scoreDay bg-[#333] px-6 py-4 rounded-lg whitespace-nowrap" onclick="setDay(this)">Sun 23 Aug</button>
+      <button class="scoreDay bg-[#333] px-6 py-4 rounded-lg whitespace-nowrap" onclick="setDay(this)">Mon 24 Aug</button>
+      <button class="scoreDay bg-black px-6 py-4 rounded-lg font-bold whitespace-nowrap" onclick="setDay(this)">Today</button>
+      <button class="scoreDay bg-[#333] px-6 py-4 rounded-lg whitespace-nowrap" onclick="setDay(this)">Tomorrow</button>
+      <button class="scoreDay bg-[#333] px-6 py-4 rounded-lg whitespace-nowrap" onclick="setDay(this)">Fri 28 Aug</button>
+    </div>
+  </div>
+  <div id="scoreCards" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-2"></div>
+</section>
+
+<!-- CONTENT -->
+<section id="latest" class="grid grid-cols-1 lg:grid-cols-12 gap-4">
+  <article class="lg:col-span-6 bg-[#303030] rounded-xl overflow-hidden group">
+    <img src="https://images.unsplash.com/photo-1521412644187-c49fa049e84d?auto=format&fit=crop&w=1200&q=85" class="w-full h-64 sm:h-80 lg:h-[360px] object-cover group-hover:scale-[1.02] transition" alt="Football">
+    <div class="p-6">
+      <p class="text-xs text-gray-400 mb-3">Analysis · Football</p>
+      <h1 class="text-3xl sm:text-4xl font-bold leading-tight">How football's biggest stars became global phenomena</h1>
+      <p class="text-gray-300 mt-4">The stories, rivalries and moments that continue to shape the beautiful game.</p>
+      <button onclick="readStory('Global football phenomenon')" class="mt-5 text-yellow-400 font-bold">Full story →</button>
+    </div>
+  </article>
+
+  <div id="news" class="lg:col-span-3 space-y-4">
+    <article class="news bg-[#303030] rounded-xl overflow-hidden" data-search="women football world cup">
+      <img src="https://images.unsplash.com/photo-1553778263-73a83bab9b0c?auto=format&fit=crop&w=700&q=80" class="w-full h-40 object-cover" alt="Football">
+      <div class="p-4"><p class="text-xs text-gray-400">Women's football</p><h2 class="font-bold text-lg mt-2">The latest developments in world football</h2></div>
+    </article>
+    <article class="news bg-[#303030] rounded-xl overflow-hidden" data-search="transfer opinion football">
+      <img src="https://images.unsplash.com/photo-1579952363873-27f3bade9f55?auto=format&fit=crop&w=700&q=80" class="w-full h-40 object-cover" alt="Player">
+      <div class="p-4"><p class="text-xs text-gray-400">Opinion</p><h2 class="font-bold text-lg mt-2">Which players could change the season?</h2></div>
+    </article>
+  </div>
+
+  <aside class="lg:col-span-3 bg-[#222] rounded-xl p-4 min-h-[300px] text-center text-gray-400">Advertisement</aside>
+</section>
+
+<!-- NEWS GRID -->
+<section class="mt-8">
+  <div class="flex items-center justify-between mb-4"><h2 class="text-3xl font-black">LATEST NEWS</h2><a href="#news" class="text-yellow-400 font-bold">View all →</a></div>
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+    <article class="news bg-[#303030] rounded-xl p-4" data-search="premier league arsenal chelsea"><p class="text-xs text-gray-400">Premier League · 2h ago</p><h3 class="font-bold text-lg mt-2">Arsenal prepare for another major challenge</h3></article>
+    <article class="news bg-[#303030] rounded-xl p-4" data-search="real madrid laliga transfer"><p class="text-xs text-gray-400">LaLiga · 3h ago</p><h3 class="font-bold text-lg mt-2">Real Madrid transfer plans take shape</h3></article>
+    <article class="news bg-[#303030] rounded-xl p-4" data-search="bayern bundesliga football"><p class="text-xs text-gray-400">Bundesliga · 4h ago</p><h3 class="font-bold text-lg mt-2">Bayern look ready for a new campaign</h3></article>
+    <article class="news bg-[#303030] rounded-xl p-4" data-search="serie a juventus inter"><p class="text-xs text-gray-400">Serie A · 5h ago</p><h3 class="font-bold text-lg mt-2">Italian giants battle for early advantage</h3></article>
+  </div>
+</section>
+
+<!-- TEAMS -->
+<section id="teams" class="mt-10">
+  <h2 class="text-3xl font-black mb-4">POPULAR TEAMS</h2>
+  <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-3">
+    <button class="team bg-[#252525] border border-white/10 rounded-xl p-4 hover:border-yellow-400">🔴<br><span>Arsenal</span></button>
+    <button class="team bg-[#252525] border border-white/10 rounded-xl p-4 hover:border-yellow-400">🔵<br><span>Chelsea</span></button>
+    <button class="team bg-[#252525] border border-white/10 rounded-xl p-4 hover:border-yellow-400">🔴<br><span>Liverpool</span></button>
+    <button class="team bg-[#252525] border border-white/10 rounded-xl p-4 hover:border-yellow-400">🔵<br><span>Man City</span></button>
+    <button class="team bg-[#252525] border border-white/10 rounded-xl p-4 hover:border-yellow-400">⚪<br><span>Real Madrid</span></button>
+    <button class="team bg-[#252525] border border-white/10 rounded-xl p-4 hover:border-yellow-400">🔵<br><span>Barcelona</span></button>
+    <button class="team bg-[#252525] border border-white/10 rounded-xl p-4 hover:border-yellow-400">🔴<br><span>Bayern</span></button>
+    <button class="team bg-[#252525] border border-white/10 rounded-xl p-4 hover:border-yellow-400">⚫<br><span>Juventus</span></button>
+  </div>
+</section>
+
+<!-- NEWSLETTER -->
+<section class="mt-10 rounded-xl bg-gradient-to-r from-[#272727] to-[#202020] p-6 sm:p-8 flex flex-col md:flex-row gap-5 justify-between items-center">
+  <div><h2 class="text-2xl font-black">GET FOOTBALL NEWS</h2><p class="text-gray-400">Subscribe for the latest stories and scores.</p></div>
+  <form onsubmit="subscribe(event)" class="w-full md:w-auto flex gap-2">
+    <input id="email" type="email" required placeholder="Your email" class="bg-[#333] rounded-lg px-4 py-3 outline-none w-full md:w-72">
+    <button class="bg-yellow-400 text-black font-black px-5 rounded-lg">Subscribe</button>
+  </form>
+</section>
+
+</main>
+
+<footer class="mt-12 bg-black p-8 text-center text-gray-400">© 2026 Front Three · Football News</footer>
+
+<script>
+const fallbackMatches = [
+ {comp:'premier',name:'Premier League',time:'15:00',home:'Arsenal',away:'Chelsea'},
+ {comp:'premier',name:'Premier League',time:'17:30',home:'Liverpool',away:'Manchester United'},
+ {comp:'laliga',name:'LaLiga',time:'20:00',home:'Real Madrid',away:'Real Sociedad'},
+ {comp:'laliga',name:'LaLiga',time:'18:30',home:'Barcelona',away:'Atletico Madrid'},
+ {comp:'bundesliga',name:'Bundesliga',time:'15:30',home:'Bayern Munich',away:'Borussia Dortmund'},
+ {comp:'seriea',name:'Serie A',time:'20:45',home:'Juventus',away:'Napoli'},
+ {comp:'ligue1',name:'Ligue 1',time:'20:00',home:'PSG',away:'Marseille'},
+ {comp:'ucl',name:'Champions League',time:'20:00',home:'Real Madrid',away:'Manchester City'}
+];
+
+function toggleMenu(){document.getElementById('mobileMenu').classList.toggle('hidden')}
+function closeMenu(){document.getElementById('mobileMenu').classList.add('hidden')}
+function toggleSearch(){document.getElementById('searchBox').classList.toggle('hidden'); if(!document.getElementById('searchBox').classList.contains('hidden')) document.getElementById('searchInput').focus()}
+function setDay(btn){document.querySelectorAll('.scoreDay').forEach(b=>b.classList.remove('bg-black','font-bold'));btn.classList.add('bg-black','font-bold')}
+
+async function loadScores(){
+  const selected=document.getElementById('competitionSelect').value;
+  let data=[];
+  try{
+    const r=await fetch('api/matches.php');
+    if(r.ok) data=await r.json();
+  }catch(e){}
+  if(!Array.isArray(data)||!data.length) data=fallbackMatches;
+  data=data.filter(m=>selected==='all'||m.competition_code===selected||m.comp===selected);
+  document.getElementById('scoreCards').innerHTML=data.map(m=>`
+    <button onclick="matchInfo('${m.home_team||m.home}','${m.away_team||m.away}')" class="text-left bg-[#333] rounded-lg p-4 hover:bg-[#3c3c3c] transition min-h-[145px]">
+      <div class="flex justify-between text-sm"><span>${m.competition||m.name}</span><b>${m.time||new Date(m.match_date||Date.now()).toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'})}</b></div>
+      <p class="text-xs text-gray-400 mt-1">Football</p>
+      <div class="flex justify-between mt-5 font-bold"><span>⚽ ${m.home_team||m.home}</span><span>${m.home_score ?? '-'}</span></div>
+      <div class="flex justify-between mt-2 font-bold"><span>⚽ ${m.away_team||m.away}</span><span>${m.away_score ?? '-'}</span></div>
+    </button>`).join('')||'<p class="text-gray-400">No matches found.</p>';
+}
+
+function searchNews(){
+ const q=document.getElementById('searchInput').value.toLowerCase().trim();
+ document.querySelectorAll('.news').forEach(n=>n.classList.toggle('hidden',q && !((n.dataset.search||'')+' '+n.innerText).toLowerCase().includes(q)));
+}
+function readStory(title){alert('Opening: '+title)}
+function matchInfo(h,a){alert(h+' vs '+a+'\nMatch details will open here.')}
+async function subscribe(e){e.preventDefault();const email=document.getElementById('email').value;try{const r=await fetch('api/subscribe.php',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email})});const d=await r.json();alert(d.message||'Subscribed successfully!')}catch(e){alert('Subscription saved on the page. Connect the PHP API to enable database storage.')}e.target.reset()}
+loadScores();
+</script>
+</body>
+</html>

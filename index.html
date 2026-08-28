@@ -34,7 +34,7 @@
     </a>
 
     <div id="desktopNav" class="hidden lg:flex items-center gap-6 text-[15px] font-black uppercase whitespace-nowrap">
-      <a href="#scores" class="nav-link hover:text-gray-300">Scores</a>
+      <a href="scores.html" class="nav-link hover:text-gray-300">Scores</a>
       <button onclick="toggleDropdown('latestMenu')" class="nav-link flex items-center gap-1 hover:text-gray-300">Latest <span>⌄</span></button>
       <a href="#forums" class="nav-link hover:text-gray-300">Forums</a>
       <button onclick="toggleDropdown('competitionMenu')" class="nav-link flex items-center gap-1 hover:text-gray-300">Competitions <span>⌄</span></button>
@@ -153,7 +153,7 @@
    
    <!-- Mobile menu -->
   <div id="mobileMenu" class="hidden lg:hidden bg-[#111] border-t border-white/10 px-5 py-4 space-y-1">
-    <a href="#goal.html" onclick="closeMobileMenu()" class="block py-3 font-bold uppercase">Scores</a>
+    <a href="scores.html" onclick="closeMobileMenu()" class="block py-3 font-bold uppercase">Scores</a>
     <a href="#news" onclick="closeMobileMenu()" class="block py-3 font-bold uppercase">Latest</a>
     <a href="#forums" onclick="closeMobileMenu()" class="block py-3 font-bold uppercase">Forums</a>
     <a href="#scores" onclick="closeMobileMenu()" class="block py-3 font-bold uppercase">Competitions</a>
@@ -677,7 +677,6 @@
 
       </article>
 
-
       <!-- CARD 2 -->
       <article
         class="article-card bg-[#333]
@@ -820,6 +819,86 @@
       </article>
 
     </div>
+
+
+     <!-- Main Container -->
+    <main class="max-w-[1650px] mx-auto px-5 py-10">
+
+        <!-- Header -->
+        <header class="mb-8">
+            <h1 class="text-4xl sm:text-5xl font-black tracking-tight">
+                QUEENS OF FOOTBALL
+                <span class="text-4xl">👑</span>
+            </h1>
+        </header>
+
+        <!-- Featured Article -->
+        <section class="bg-[#303030] rounded-md overflow-hidden
+                        flex flex-col lg:flex-row min-h-[460px]">
+
+            <!-- Image -->
+            <div class="lg:w-1/2 h-[300px] lg:h-auto">
+                <img
+                    src="pict/cc.webp"
+                    alt="Women's football"
+                    class="w-full h-full object-cover"
+                >
+            </div>
+
+            <!-- Article Content -->
+            <div class="lg:w-1/2 p-7 sm:p-10 flex flex-col justify-between">
+
+                <div>
+
+                    <!-- Category -->
+                    <div class="text-sm text-gray-300 font-semibold mb-14">
+                        <span>Women's Champions League Qua...</span>
+                        <span class="mx-2">•</span>
+                        <span>SKN St. Poelten vs Juventus</span>
+                    </div>
+
+                    <!-- Title -->
+                    <h2 class="text-3xl sm:text-4xl lg:text-[40px]
+                               leading-tight font-normal max-w-2xl">
+                        Women's Champions League:
+                        Juventus soar, Inter fall
+                    </h2>
+
+                </div>
+
+                <!-- Bottom Information -->
+                <div class="mt-12 flex flex-col sm:flex-row
+                            sm:items-center justify-between gap-6">
+
+                    <!-- Date & Comments -->
+                    <div class="flex items-center gap-5
+                                text-gray-200 text-sm">
+
+                        <span class="flex items-center gap-2">
+                            <span class="text-lg">◷</span>
+                            Aug 26, 2026
+                        </span>
+
+                        <span class="flex items-center gap-2">
+                            <span class="text-lg">▢</span>
+                            0
+                        </span>
+
+                    </div>
+
+                    <!-- Full Story -->
+                    <a href="#"
+                       class="flex items-center gap-3 font-bold
+                              text-white hover:text-orange-400 transition">
+                        Full story
+                        <span class="text-2xl text-orange-500">→</span>
+                    </a>
+
+                </div>
+            </div>
+
+        </section>
+
 
 
     <!-- HIDDEN MORE ARTICLES -->
